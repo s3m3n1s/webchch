@@ -2,7 +2,7 @@ from typing import NamedTuple
 from extractor.extractor import Extractor
 
 from analyzer.analyzers.analyzer_interface import AnalyzerABC
-from analyzer.analyzers.wad import Wad
+from analyzer.analyzers.wad_analyzer import Wad
 from analyzer.analyzers.whatweb import WhatWeb
 from analyzer.analyzers.custom import Custom
 
