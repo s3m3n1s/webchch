@@ -2,6 +2,8 @@ from typing import NamedTuple
 
 from database.targets.targets_worker import FileWorker
 
+import argparse
+
 
 class UtilsNames(NamedTuple):
     Util1 = "Wad"
@@ -9,40 +11,40 @@ class UtilsNames(NamedTuple):
     Util0 = "Custom"
 
 
-async def console_controller_loop():
+async def console_controller():
     await FileWorker.init()
 
-    while True:
-        print("\n__________________________________"
-              "\nChoose what you want:")
-        print("1. Add url\n2. Delete url\n")
-        what_to_do = int(input("Write task number: "))
+    parser = argparse.ArgumentParser(
+        description="WebChangeChecker - utility for observe websyte and track imortant change")
+    parser.add_argument("url", type=str, help="url address to check changes")
+    parser.add_argument("-f", "--freq", metavar="frequency", type=int, default=3600,
+                        help="url address check frequency in seconds (default: 3600)")
+    parser.add_argument("-su", "--scan_util", metavar="scan_util", type=int, default=0,
+                        help="input № of util to scan url: 1 - {:s}; 2 - {:s}".format(UtilsNames.Util1,
+                                                                                      UtilsNames.Util2))
+    parser.add_argument("-d", "--delete", action="store_true", help="flag to remove url from check changes list")
+    args = parser.parse_args()
+    print(args)
 
-        if what_to_do == 1:
-            url = str(input("Input target url: "))
-            frequency = int(input("Input frequency of checking url (in seconds): "))
-            scan_util_n = int(input(f"Input № of util to scan url:"
-                                    f"\n\t1. {UtilsNames.Util1}"
-                                    f"\n\t2. {UtilsNames.Util2}"
-                                    f"\n"))
+    if not args.delete:
+        url = args.url
+        frequency = args.freq
+        scan_util_n = args.scan_util
 
-            if scan_util_n == 1:
-                scan_util = "Wad"
-            elif scan_util_n == 2:
-                scan_util = "WhatWeb"
-            else:
-                scan_util = "Custom"
-
-            url_info = {"frequency": frequency, "scan_util": scan_util}
-            target = {url: url_info}
-
-            await FileWorker.append_value(file_name=FileWorker.file_with_curr_targets, value=target, key="curr_targets")
-            await FileWorker.append_value(file_name=FileWorker.file_with_all_targets, value=target, key="all_targets")
-        elif what_to_do == 2:
-            print("Input urls for stop scanning: ", end="")
-            url = input()
-            target = {url: ""}
-            await FileWorker.append_value(file_name=FileWorker.file_with_stop_targets,
-                                          value=target, key="stop_targets")
+        if scan_util_n == 1:
+            scan_util = "Wad"
+        elif scan_util_n == 2:
+            scan_util = "WhatWeb"
         else:
-            print("Select correct number.")
+            scan_util = "Custom"
+
+        url_info = {"frequency": frequency, "scan_util": scan_util}
+        target = {url: url_info}
+
+        await FileWorker.append_value(file_name=FileWorker.file_with_curr_targets, value=target, key="curr_targets")
+        await FileWorker.append_value(file_name=FileWorker.file_with_all_targets, value=target, key="all_targets")
+    elif args.delete:
+        url = args.url
+        target = {url: ""}
+        await FileWorker.append_value(file_name=FileWorker.file_with_stop_targets,
+                                      value=target, key="stop_targets")
