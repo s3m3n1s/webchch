@@ -18,7 +18,7 @@ class Analyzer:
     def __init__(self, analyze_util: str):
         self.util_name = analyze_util
         self.util_worker = Custom()
-
+        self.difference = {}
         self._set_util_worker()
 
     def _set_util_worker(self):
@@ -36,9 +36,8 @@ class Analyzer:
         data = extractor.data
         return data
 
-    def analyze(self, url: str) -> dict:
-        # data = self._get_data_from_url(url=url)
-        self.util_worker.analyze(url=url)
+    def analyze(self, url: str):
+        result = self.util_worker.analyze(url=url)
+        data_to_compare = self.util_worker.get_last_data(url=url)
 
-        result = {}
-        return result
+        self.difference = {}

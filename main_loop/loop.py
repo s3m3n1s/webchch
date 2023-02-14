@@ -18,8 +18,8 @@ async def period_analyzing(freq: int, url: str, scan_util: str):
             print(f">> Target with url '{url}' deleted from tasks queue")
             break
         analyzer = Analyzer(analyze_util=scan_util)
-        # result = analyzer.analyze()
-        # print(result)
+        analyzer.analyze(url=url)
+        print(">> difference: ", analyzer.difference)
         print(f">> Util '{scan_util}' working with url: {url}")
         await sleep(freq)
 
