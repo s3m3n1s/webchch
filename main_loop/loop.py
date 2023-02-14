@@ -2,24 +2,25 @@ import asyncio
 from asyncio import sleep, create_task
 
 import database.targets.targets_worker as targets_worker
-from database.targets.targets_worker import FileWorker
+from analyzer.analyzer_factory import Analyzer
+
 from configuration.config import TIME_UPD_TASK_QUEUE
 
 
 asyncio.run(targets_worker.create_target_queue())
 
 
-async def period_analyzing(freq: int, url: str, scan_util: int):
+async def period_analyzing(freq: int, url: str, scan_util: str):
     while True:
         stop_list = await targets_worker.get_stop_urls(key="stop_targets")
         if url in stop_list["stop_targets"].keys():
             await targets_worker.del_url(url)
-            print(f">> Target with url '{url}' deleted")
+            print(f">> Target with url '{url}' deleted from tasks queue")
             break
-        # analyzer = Analyzer(url=url)
-        # result = analyzer.analyze_by_url()
+        analyzer = Analyzer(analyze_util=scan_util)
+        # result = analyzer.analyze()
         # print(result)
-        print(f">> Util №{scan_util} working with url: {url}")
+        print(f">> Util '{scan_util}' working with url: {url}")
         await sleep(freq)
 
 

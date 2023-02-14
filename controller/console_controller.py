@@ -1,7 +1,12 @@
-import asyncio
+from typing import NamedTuple
 
 from database.targets.targets_worker import FileWorker
-import database.targets.targets_worker as targets_worker
+
+
+class UtilsNames(NamedTuple):
+    Util1 = "Wad"
+    Util2 = "WhatWeb"
+    Util0 = "Custom"
 
 
 async def console_controller_loop():
@@ -16,7 +21,17 @@ async def console_controller_loop():
         if what_to_do == 1:
             url = str(input("Input target url: "))
             frequency = int(input("Input frequency of checking url (in seconds): "))
-            scan_util = int(input("Input № of util to scan url:\n\t1. Util1\n\t2. Util2\n"))
+            scan_util_n = int(input(f"Input № of util to scan url:"
+                                    f"\n\t1. {UtilsNames.Util1}"
+                                    f"\n\t2. {UtilsNames.Util2}"
+                                    f"\n"))
+
+            if scan_util_n == 1:
+                scan_util = "Wad"
+            elif scan_util_n == 2:
+                scan_util = "WhatWeb"
+            else:
+                scan_util = "Custom"
 
             url_info = {"frequency": frequency, "scan_util": scan_util}
             target = {url: url_info}
