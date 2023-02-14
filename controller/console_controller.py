@@ -16,14 +16,16 @@ async def console_controller_loop():
         if what_to_do == 1:
             url = str(input("Input target url: "))
             frequency = int(input("Input frequency of checking url (in seconds): "))
-            target = {url: frequency}
-            # target = {"url": url, "frequency": frequency}
+            scan_util = int(input("Input № of util to scan url:\n\t1. Util1\n\t2. Util2\n"))
+
+            url_info = {"frequency": frequency, "scan_util": scan_util}
+            target = {url: url_info}
 
             await FileWorker.append_value(file_name=FileWorker.file_with_curr_targets, value=target, key="curr_targets")
             await FileWorker.append_value(file_name=FileWorker.file_with_all_targets, value=target, key="all_targets")
         elif what_to_do == 2:
             print("Input urls for stop scanning: ", end="")
-            url = int(input())
+            url = input()
             target = {url: ""}
             await FileWorker.append_value(file_name=FileWorker.file_with_stop_targets,
                                           value=target, key="stop_targets")

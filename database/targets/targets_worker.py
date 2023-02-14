@@ -1,7 +1,5 @@
 import json
 
-from typing import NamedTuple
-
 import database.targets.config as config
 
 
