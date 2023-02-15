@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  app:
+    build:
+      dockerfile: Dockerfile_app
+    image: wchch
+  app_controller:
+    build:
+      dockerfile: Dockerfile_appcontroller
+    image: wchch_control
+    command: https://google.com
