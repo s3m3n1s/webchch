@@ -8,8 +8,7 @@ class Wad(AnalyzerABC):
     def analyze(self, url=None):
         results = wad.detection.Detector().detect_multiple([url])
         res = wad.JSONOutput().retrieve(results=results)
-        if not os.path.exists('wad_scans'):
-            os.mkdir('wad_scans')
+        os.mkdir('wad_scans')
         with open('wad_scans/' + md5(url.encode()).hexdigest(), 'w') as memo:
             json.dump(res, memo)
         return res
