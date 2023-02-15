@@ -8,14 +8,13 @@ class Wad(AnalyzerABC):
     def analyze(self, url=None):
         results = wad.detection.Detector().detect_multiple([url])
         res = wad.JSONOutput().retrieve(results=results)
-        os.mkdir('wad_scans')
-        with open('wad_scans/' + md5(url).hexdigest(), 'w') as memo:
+        with open('wad_scans/' + md5(url.encode()).hexdigest(), 'w') as memo:
             json.dump(res, memo)
         return res
 
     def get_last_data(self, url=str) -> dict:
         try:
-            with open('wad_scans/' + md5(url).hexdigest(), 'r') as memo:
+            with open('wad_scans/' + md5(url.encode()).hexdigest(), 'r') as memo:
                 res = json.load(memo)
                 return dict(res)
         except Exception as e:
