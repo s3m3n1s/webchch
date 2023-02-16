@@ -47,9 +47,9 @@ class Analyzer:
         data_to_compare_list = []
         result_list = []
 
-        if data_to_compare != {}:
+        if type(data_to_compare) == dict and data_to_compare != {}:
             data_to_compare_list = list(data_to_compare.values())[0]
-        if result != {}:
+        if type(result) == dict and result != {}:
             result_list = list(result.values())[0]
 
         self.difference = self.util_comparator.compare(data_to_compare_list, result_list)
