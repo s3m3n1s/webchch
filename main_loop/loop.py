@@ -19,8 +19,8 @@ async def period_analyzing(freq: int, url: str, scan_util: str):
             break
         analyzer = Analyzer(analyze_util=scan_util)
         analyzer.analyze(url=url)
-        print(">> difference: ", analyzer.difference)
         print(f">> Util '{scan_util}' working with url: {url}")
+        print(">> difference: ", analyzer.difference)
         await sleep(freq)
 
 
