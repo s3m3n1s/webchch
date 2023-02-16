@@ -11,6 +11,7 @@ class WhatWebComparator(ComparatorABC):
             changes = ''
 
             if action == 'change':
+                action = 'Scanned data has changed:'
                 if isinstance(diff[1], str):
                     name = diff[1]
                 else:
@@ -21,12 +22,14 @@ class WhatWebComparator(ComparatorABC):
                 changes = ": " + str(diff[2][0]) + " -> " + str(diff[2][1])
 
             if action == 'add':
+                action = 'Added to scanned data:'
                 name = diff[1]
 
                 for change in diff[2]:
                     changes += '\n' + str(change)
 
             if action == 'remove':
+                action = 'Removed from scanned data:'
                 name = diff[1]
 
                 for change in diff[2]:
