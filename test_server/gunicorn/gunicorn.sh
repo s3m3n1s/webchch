@@ -1,2 +1,1 @@
-#!/bin/sh
-gunicorn -b 0.0.0.0:8080 -k uvicorn.workers.UvicornWorker flask_app:app
+uvicorn fast_api_app:app --reload
