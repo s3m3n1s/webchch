@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  app:
+    build:
+      dockerfile: Dockerfile_app
+    image: wchch
+    volumes:
+      - targets_storage:/database/targets/targets_storage
+  app_controller:
+    build:
+      dockerfile: Dockerfile_appcontroller
+    image: wchch_control
+    volumes:
+      - targets_storage:/database/targets/targets_storage
+    command: https://vk.com -f 10
+volumes:
+  targets_storage:
