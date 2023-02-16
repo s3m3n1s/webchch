@@ -41,8 +41,13 @@ async def console_controller():
 
         await FileWorker.append_value(file_name=FileWorker.file_with_curr_targets, value=target, key="curr_targets")
         await FileWorker.append_value(file_name=FileWorker.file_with_all_targets, value=target, key="all_targets")
+
+        print("Added {:s} to targets with frequency {:d} seconds and scan util {:s}".format(url, frequency, scan_util))
+
     elif args.delete:
         url = args.url
         target = {url: ""}
         await FileWorker.append_value(file_name=FileWorker.file_with_stop_targets,
                                       value=target, key="stop_targets")
+
+        print("Deleted {:s} from targets".format(url))
