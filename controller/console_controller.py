@@ -15,7 +15,7 @@ async def console_controller():
     await FileWorker.init()
 
     parser = argparse.ArgumentParser(
-        description="WebChangeChecker - utility for observe websyte and track imortant change")
+        description="WebChangeChecker - utility for observe website and track important change")
     parser.add_argument("url", type=str, help="url address to check changes")
     parser.add_argument("-f", "--freq", metavar="frequency", type=int, default=3600,
                         help="url address check frequency in seconds (default: 3600)")
