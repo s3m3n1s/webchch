@@ -8,5 +8,10 @@ ____
 Для запуска утилиты необходимо запустить файлы:
 * app.py
 * app_controller.py
+ИЛИ
+* docker-compose build
+* docker-compose up -d
+* docker run wchch_control <url> -f <частота> 
 
 ### 
+
