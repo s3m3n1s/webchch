@@ -12,7 +12,7 @@ ____
 ИЛИ
 * docker-compose build
 * docker-compose up -d
-* docker run wchch_control <url> -f <частота> 
+* docker run wchch_control http:yoursite.com -f <частота> 
 
 ### 
 
